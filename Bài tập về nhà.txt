@@ -1,0 +1,12 @@
+1. TÌm hiểu lại về cấu hình Security (cấu hình cuối cùng)
+
+2. Tìm hiểu về EntityRelationship (ORM)
+ - @OneToOne
+ - @OneToMany
+ - @ManyToOne
+ - @ManyToMany
+3. TÌm hiểu lại về JPARepository
+ - Cách tạo truy vấn trong repository 
+ + Naming method
+ + @Query
+4. Qui tắc xây dựng restful(naming convention endpoint, error status code, format json response)
