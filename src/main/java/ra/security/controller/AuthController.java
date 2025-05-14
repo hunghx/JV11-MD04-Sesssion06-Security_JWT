@@ -18,7 +18,7 @@ import ra.security.security.jwt.JWTProvider;
 import ra.security.security.principle.UserDetailsCustom;
 
 @RestController
-@RequestMapping("/api.hunghx.com/v1/auth")
+@RequestMapping("/auth")
 // api.hunghx.com/v1/auth/sign-in
 public class AuthController {
     @Autowired

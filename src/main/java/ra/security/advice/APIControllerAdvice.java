@@ -1,5 +1,6 @@
 package ra.security.advice;
 
+import jakarta.mail.MessagingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -38,6 +39,11 @@ public class APIControllerAdvice {
         Map<String,ErrorResponse> map = new HashMap<>();
         map.put("error", err);
         return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(MessagingException.class)
+    public ResponseEntity<?> handleSendmail(MessagingException e){
+        e.printStackTrace();
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<?> handleRuntime(RuntimeException e){

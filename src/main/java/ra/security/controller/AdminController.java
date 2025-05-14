@@ -15,7 +15,6 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api.hunghx.com/v1")
 ///api.hunghx.com/v1/user/**
 public class AdminController {
 //    private final IAdminService adminService;

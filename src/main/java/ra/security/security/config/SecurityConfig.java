@@ -15,9 +15,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 import ra.security.security.jwt.JWTAuthTokenFilter;
 import ra.security.security.principle.UserDetailsServiceCustom;
 
@@ -58,7 +60,12 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
+//    @Bean
+//    public MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector) {
+//        return new MvcRequestMatcher.Builder(introspector);
+//    }
+//    @Autowired
+//    public MvcRequestMatcher.Builder mvc;
 
     @Bean // phân quyền
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -72,14 +79,16 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests( // cấu hình phân quyền theo đường dẫn
                         // /api.hunghx.com/v1/auth/sign-in
-                        auth -> auth.requestMatchers("/api.hunghx.com/v1/auth/**").permitAll() // đăng nhập đăng kí
-                                .requestMatchers("/api.hunghx.com/v1/admin/**").hasAuthority("ADMIN") // chỉ con quyê admin
-//                                .requestMatchers("/api.hunghx.com/v1/admin/**").hasRole("USER") // chỉ con quyê admin
-                                .requestMatchers("/api.hunghx.com/v1/user/**").hasAuthority("USER")
-                                .requestMatchers("/api.hunghx.com/v1/manager/**").hasAuthority("MANAGER")
-                                .requestMatchers("/api.hunghx.com/v1/user-mana/**").hasAnyAuthority("USER", "MANAGER")
-                                .requestMatchers("/api.hunghx.com/v1/public/**").permitAll()
-                                .anyRequest().authenticated() // còn lại thì phải được xác thực
+                        auth -> auth
+//                                .requestMatchers("/api.hunghx.com/v1/auth/**").permitAll() // đăng nhập đăng kí
+//                                .requestMatchers("/api.hunghx.com/v1/admin/**").hasAuthority("ADMIN") // chỉ con quyê admin
+//                                .requestMatchers(mvc.pattern("/admin/**")).hasAuthority("ADMIN")
+//                                .requestMatchers("/api.hunghx.com/v1/admin/**").hasRole("USER") // chỉ con quyên admin
+//                                .requestMatchers("/api.hunghx.com/v1/user/**").hasAuthority("USER")
+//                                .requestMatchers("/api.hunghx.com/v1/manager/**").hasAuthority("MANAGER")
+//                                .requestMatchers("/api.hunghx.com/v1/user-mana/**").hasAnyAuthority("USER", "MANAGER")
+//                                .requestMatchers("/api.hunghx.com/v1/send-mail").permitAll()
+                                .anyRequest().permitAll() // còn lại thì phải được xác thực
                 );
         http.authenticationProvider(authenticationProvider());
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
