@@ -44,7 +44,6 @@ public class EmailService {
                 helper.addAttachment(attachment.getOriginalFilename(), new ByteArrayResource(attachment.getBytes()));
             }
         }
-
         mailSender.send(message);
     }
 
